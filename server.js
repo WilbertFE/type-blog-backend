@@ -21,8 +21,8 @@ const app = express();
 // middleware configuration
 app.use(
   cors({
-    origin: "http://localhost:5173",
-    methods: "GET, POST, PUT, DELETE",
+    origin: ["https://type-blog-frontend.vercel.app/"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
