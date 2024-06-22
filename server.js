@@ -21,7 +21,7 @@ const app = express();
 // middleware configuration
 app.use(
   cors({
-    origin: ["https://type-blog-frontend.vercel.app", "http://localhost:3000"],
+    origin: ["https://type-blog-frontend.vercel.app", "http://localhost:5173"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
@@ -85,9 +85,9 @@ app.use("/api/auth", authRoute);
 // Handle preflight requests
 app.options("*", cors());
 
-// Start server
-// app.listen(port, () => {
-//   console.log(`Your application is listening on http://localhost:${port}`);
+// // Start server
+// app.listen(() => {
+//   // console.log(`Your application is listening on http://localhost:${port}`);
 //   connectDB();
 // });
 
