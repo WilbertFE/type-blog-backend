@@ -29,13 +29,13 @@ const app = express();
 
 app.use(cookieParser());
 app.use(express.json());
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-  })
-);
+// app.use(
+//   session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: true,
+//   })
+// );
 app.use(passport.initialize());
 app.use(passport.session());
 
