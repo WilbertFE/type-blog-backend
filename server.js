@@ -86,7 +86,11 @@ app.use("/api/auth", authRoute);
 app.options("*", cors());
 
 // Start server
-app.listen(port, () => {
-  console.log(`Your application is listening on http://localhost:${port}`);
-  connectDB();
-});
+// app.listen(port, () => {
+//   console.log(`Your application is listening on http://localhost:${port}`);
+//   connectDB();
+// });
+
+connectDB();
+
+export default app;
