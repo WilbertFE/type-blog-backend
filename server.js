@@ -19,13 +19,13 @@ const port = process.env.SERVER_PORT || 6005;
 const app = express();
 
 // middleware configuration
-app.use(
-  cors({
-    origin: ["https://type-blog-frontend.vercel.app", "http://localhost:5173"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: ["https://type-blog-frontend.vercel.app", "http://localhost:5173"],
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     credentials: true,
+//   })
+// );
 
 app.use(cookieParser());
 app.use(express.json());
@@ -83,7 +83,7 @@ app.use("/api/blogs", blogRoute);
 app.use("/api/auth", authRoute);
 
 // Handle preflight requests
-app.options("*", cors());
+// app.options("*", cors());
 
 // // Start server
 // app.listen(() => {
