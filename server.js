@@ -21,7 +21,7 @@ const app = express();
 // middleware configuration
 app.use(
   cors({
-    origin: ["https://type-blog-frontend.vercel.app/"],
+    origin: ["https://type-blog-frontend.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
