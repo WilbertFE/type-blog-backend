@@ -15,14 +15,14 @@ const { Strategy } = GoogleStrategy;
 
 dotenv.config();
 
-// const port = process.env.SERVER_PORT || 6005;
+const port = process.env.SERVER_PORT || 6005;
 const app = express();
 
 // middleware configuration
 app.use(
   cors({
-    origin: "https://type-blog-frontend.vercel.app",
-    methods: "GET POST PUT DELETE",
+    origin: ["https://type-blog-frontend.vercel.app", "http://localhost:3000"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
@@ -82,7 +82,11 @@ app.use("/auth/google", googleAuthRoute);
 app.use("/api/blogs", blogRoute);
 app.use("/api/auth", authRoute);
 
-app.listen(() => {
-  // console.log(`Your application is listening on http://localhost:${port}`);
+// Handle preflight requests
+app.options("*", cors());
+
+// Start server
+app.listen(port, () => {
+  console.log(`Your application is listening on http://localhost:${port}`);
   connectDB();
 });
