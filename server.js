@@ -15,7 +15,7 @@ const { Strategy } = GoogleStrategy;
 
 dotenv.config();
 
-const port = process.env.SERVER_PORT || 6005;
+// const port = process.env.SERVER_PORT || 6005;
 const app = express();
 
 // middleware configuration
@@ -82,7 +82,7 @@ app.use("/auth/google", googleAuthRoute);
 app.use("/api/blogs", blogRoute);
 app.use("/api/auth", authRoute);
 
-app.listen(port, () => {
-  console.log(`Your application is listening on http://localhost:${port}`);
+app.listen(() => {
+  // console.log(`Your application is listening on http://localhost:${port}`);
   connectDB();
 });
