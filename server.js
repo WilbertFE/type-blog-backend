@@ -113,7 +113,7 @@ app.use("/api/auth", authRoute);
 // Handle preflight requests
 app.options("*", cors());
 
-// Start server
+// Start serve
 app.listen(port, () => {
   console.log(`Your application is listening on http://localhost:${port}`);
   connectDB();
