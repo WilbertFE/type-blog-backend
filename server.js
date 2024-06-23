@@ -12,11 +12,29 @@ import { User } from "./models/user.model.js";
 import { blogRoute } from "./routes/blog.route.js";
 import { authRoute } from "./routes/auth.route.js";
 const { Strategy } = GoogleStrategy;
+import { createClient } from "redis";
+import RedisStore from "connect-redis";
+import { v4 as uuidv4 } from "uuid";
 
 dotenv.config();
 
 const port = process.env.SERVER_PORT || 6005;
 const app = express();
+
+const redisClient = await createClient({
+  url: process.env.REDIS_URI,
+  username: process.env.REDIS_USERNAME,
+  password: process.env.REDIS_PASSWORD,
+  socket: {
+    connectTimeout: 5000,
+  },
+})
+  .on("error", (err) => console.log("Redis Client Error", err))
+  .connect();
+
+const redisStore = new RedisStore({
+  client: redisClient,
+});
 
 // middleware configuration
 app.use(
@@ -31,9 +49,19 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(
   session({
+    store: redisStore,
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
+    cookie: {
+      secure: true,
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24,
+    },
+    genid: function (req) {
+      const sessionId = uuidv4();
+      return sessionId;
+    },
   })
 );
 app.use(passport.initialize());
@@ -59,7 +87,7 @@ passport.use(
             username: `user${Date.now()}`,
           });
         }
-        done(null, profile);
+        done(null, profile.id);
       } catch (err) {
         return done(err, null);
       }
@@ -67,12 +95,12 @@ passport.use(
   )
 );
 
-passport.serializeUser((user, done) => {
-  done(null, user.id);
+passport.serializeUser((googleId, done) => {
+  done(null, googleId);
 });
 
-passport.deserializeUser(async (id, done) => {
-  const user = await User.findOne({ googleId: id });
+passport.deserializeUser(async (googleId, done) => {
+  const user = await User.findOne({ googleId });
   done(null, user);
 });
 
