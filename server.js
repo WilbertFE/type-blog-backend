@@ -34,4 +34,6 @@ app.listen(port, () => {
   connectDB();
 });
 
+connectDB();
+
 export default app;
