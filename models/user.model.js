@@ -2,11 +2,21 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    googleId: String,
     displayName: String,
-    email: String,
-    image: String,
-    username: String,
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    image: {
+      type: String,
+      default: "https://github.com/shadcn.png",
+    },
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+    },
   },
   {
     timestamps: true,
